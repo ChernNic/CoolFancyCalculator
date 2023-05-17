@@ -3,11 +3,15 @@ package com.example.coolfancycalculatorapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,8 +20,6 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import org.mariuszgromada.math.mxparser.*;
 import com.google.android.material.button.MaterialButton;
-
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,7 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout btnLayout;
     VideoView ADVideo;
 
+    AnimationDrawable frameAnimation;
+    AnimationDrawable chinaAnimation;
+    ImageView adImg;
+    ImageView chinaImg;
+
+    Vibrator vibe;
     boolean showAd;
+    boolean isAdActive = true;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button button_settings = findViewById(R.id.button_settings);
 
+        vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         button_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,8 +105,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ADLayout.setVisibility(View.GONE);
                 btnLayout.setVisibility(View.VISIBLE);
                 ADVideo.stopPlayback();
+                vibe.cancel();
             }
         });
+
+        //Анимации
+
+        adImg = findViewById(R.id.adAnim);
+        frameAnimation = (AnimationDrawable) adImg.getDrawable();
+
+        chinaImg = findViewById(R.id.adAnim2);
+        chinaAnimation = (AnimationDrawable) chinaImg.getDrawable();
+        chinaAnimation.start();
+
+
+        Animation anim_slide_up = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        btnLayout.startAnimation(anim_slide_up);
+
+        Animation anim_slide_down = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        result_TextView.startAnimation(anim_slide_down);
+        solution_TextView.startAnimation(anim_slide_down);
     }
 
 
@@ -112,12 +140,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         MaterialButton btn = (MaterialButton) view;
         solution = solution_TextView.getText().toString();
 
-        Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibe.vibrate(100);
 
         if(btn.getText().toString().equals("AC")){
             solution_TextView.setText("0");
             result_TextView.setText("0");
+
             return;
         }
         else if (btn.getText().toString().equals("C")) {
@@ -136,6 +164,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Uri videoUri= Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.advideo);
                 ADVideo.setVideoURI(videoUri);
                 ADVideo.start();
+
+                chinaAnimation.start();
+                frameAnimation.start();
+
+                Animation anim_appear = AnimationUtils.loadAnimation(this, R.anim.appear_from_center);
+                ADLayout.startAnimation(anim_appear);
+
+                vibe.vibrate(new long[]{0, 2000, 500, 2000, 500}, 0);
+
             }
 
 

@@ -1,0 +1,7 @@
+<animation-list android:id="@+id/animation"
+    android:oneshot="false"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/china1" android:duration="750" />
+    <item android:drawable="@drawable/china2" android:duration="750" />
+    <item android:drawable="@drawable/china3" android:duration="750" />
+</animation-list>

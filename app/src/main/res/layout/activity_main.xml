@@ -28,7 +28,8 @@
         android:text="0"
         android:textAlignment="textEnd"
         android:textColor="#3d6377"
-        android:textSize="40dp" />
+        android:textSize="40dp"
+        android:freezesText="true"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -227,12 +228,6 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.CalculatorButton"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:text="1" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_1"
                 style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_width="72dp"
@@ -343,22 +338,41 @@
 
     <RelativeLayout
         android:id="@+id/AdLayout"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:backgroundTint="#140d0f">
+
         <VideoView
             android:id="@+id/videoView"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="#140d0f" />
+
+        <ImageView
+            android:id="@+id/adAnim"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="473dp"
+            android:backgroundTint="#140d0f"
+            android:src="@drawable/call_animation" />
+
+        <ImageView
+            android:id="@+id/adAnim2"
+            android:layout_width="wrap_content"
+            android:layout_height="230dp"
+            android:backgroundTint="#140d0f"
+            android:layout_above="@id/videoView"
+            android:src="@drawable/china_animation" />
 
         <Button
             android:id="@+id/CloseButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:textSize="12dp"
             android:layout_marginLeft="5dp"
+            android:background="#00ffffff"
             android:text="X"
-            android:background="#00ffffff"/>
+            android:textSize="12dp" />
     </RelativeLayout>
 </RelativeLayout>
